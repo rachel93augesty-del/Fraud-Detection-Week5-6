@@ -1,0 +1,10 @@
+# Ignore raw data files
+data/raw/
+# Ignore Python virtual environment
+venv/
+# Ignore caches and outputs
+__pycache__/
+*.pyc
+notebooks/.ipynb_checkpoints/
+output/
+mlflow.db
