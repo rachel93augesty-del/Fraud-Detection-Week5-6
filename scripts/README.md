@@ -33,7 +33,7 @@ This folder is intentionally kept minimal to:
 
 ---
 
-## 🚀 Future Extensions (Optional)
+## 🚀 Future Extensions
 - `run_pipeline.py` – end-to-end execution
 - `train_model.py` – model retraining
 - `evaluate_model.py` – automated evaluation
