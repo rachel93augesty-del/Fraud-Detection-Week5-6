@@ -50,10 +50,22 @@ def test_shap_values_shape(trained_model):
     model, X, _ = trained_model
     explainer, shap_values = compute_shap_values(model, X)
 
-    # Binary classification returns list
-    assert isinstance(shap_values, list)
-    assert shap_values[1].shape == X.shape
+    # SHAP may return:
+    # 1. ndarray of shape (n_samples, n_features)  -> old binary
+    # 2. ndarray of shape (n_samples, n_features, n_classes) -> new binary/multi-class
+    assert isinstance(shap_values, np.ndarray)
 
+    if shap_values.ndim == 2:
+        # old behavior
+        assert shap_values.shape == X.shape
+    elif shap_values.ndim == 3:
+        # new behavior: last dim = n_classes
+        n_samples, n_features = X.shape
+        assert shap_values.shape[0] == n_samples
+        assert shap_values.shape[1] == n_features
+        assert shap_values.shape[2] == 2  # binary classifier
+    else:
+        raise ValueError(f"Unexpected SHAP array shape: {shap_values.shape}")
 
 def test_tp_fp_fn_indices():
     y_true = np.array([1, 0, 1, 0])
