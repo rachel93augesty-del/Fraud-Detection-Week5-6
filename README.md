@@ -1,104 +1,160 @@
-Fraud Detection Project (Week 5-6)
-Project Overview
+# 🕵️ Fraud Detection Using Machine Learning
 
-This project aims to detect fraudulent transactions in e-commerce and bank datasets using a full machine learning workflow. It covers:
+## 📌 Project Overview
+This project implements an end-to-end **fraud detection system** using machine learning techniques on highly imbalanced datasets.  
+It combines **data analysis, feature engineering, ensemble modeling, explainability with SHAP**, and **business-driven insights** to support real-world fraud prevention.
 
-Data cleaning and preprocessing
+Datasets used:
+- **Fraud_Data.csv** – E-commerce transaction fraud data
+- **creditcard.csv** – European cardholder transaction data
+
+---
+
+## 🎯 Project Objectives
+- Prepare clean, feature-rich datasets for modeling
+- Handle extreme class imbalance effectively
+- Build and compare baseline and ensemble models
+- Interpret model predictions using SHAP
+- Translate model insights into actionable business recommendations
+
+---
+
+## 📁 Project Structure
+
+fraud-detection/
+├── .vscode/
+│ └── settings.json
+├── .github/
+│ └── workflows/
+│ └── unittests.yml
+├── data/ # Gitignored
+│ ├── raw/ # Original datasets
+│ └── processed/ # Cleaned & engineered data
+├── notebooks/
+│ ├── eda-fraud-data.ipynb
+│ ├── eda-creditcard.ipynb
+│ ├── feature-engineering.ipynb
+│ ├── modeling.ipynb
+│ ├── shap-explainability.ipynb
+│ └── README.md
+├── src/
+│ ├── task1_preprocessing.py
+│ ├── task2_modeling.py
+│ ├── task3_model_explain.py
+│ └── init.py
+├── tests/
+│ └── init.py
+├── models/ # Saved trained models
+├── scripts/
+│ └── README.md
+├── requirements.txt
+├── .gitignore
+└── README.md
+
+yaml
+Copy code
+
+---
+
+## ⚙️ Setup Instructions
+
+### 1️⃣ Clone the Repository
+```bash
+git clone https://github.com/<your-username>/fraud-detection.git
+cd fraud-detection
+2️⃣ Create a Virtual Environment
+bash
+Copy code
+python -m venv venv
+source venv/bin/activate        # Windows: venv\Scripts\activate
+3️⃣ Install Dependencies
+bash
+Copy code
+pip install -r requirements.txt
+🧠 Workflow Summary
+✅ Task 1 – Data Analysis & Preprocessing
+Missing value handling and duplicate removal
 
 Exploratory Data Analysis (EDA)
 
-Feature engineering
+Class imbalance analysis
 
-Handling class imbalance
+IP address to country integration
 
-Model building and evaluation
+Feature engineering:
 
-Explainable AI analysis using SHAP
+Transaction velocity & frequency
 
-Business-focused recommendations
+Time-based features (hour, day of week)
 
-The goal is to improve fraud detection accuracy, reduce false positives/negatives, and provide interpretable insights for decision-making.
+Time since signup
 
-Project Objectives
+Scaling and encoding
 
-Data Cleaning: Handle missing values, remove duplicates, and correct data types.
+SMOTE applied to training data only
 
-Exploratory Data Analysis (EDA): Understand feature distributions, relationships, and class imbalance.
+✅ Task 2 – Model Building & Training
+Stratified train-test split
 
-Geolocation Integration: Map IP addresses to countries and analyze fraud patterns.
+Logistic Regression baseline
 
-Feature Engineering: Create features like:
+Ensemble models (Random Forest / XGBoost / LightGBM)
 
-Transaction frequency and velocity
+Basic hyperparameter tuning
 
-Time-based features (hour_of_day, day_of_week)
+Stratified 5-fold cross-validation
 
-time_since_signup
+Evaluation using:
 
-Data Transformation: Scale numerical features and encode categorical variables.
+F1-score
 
-Handle Class Imbalance: Apply SMOTE or undersampling to balance the target variable.
+AUC-PR
 
-Model Building & Evaluation:
+Confusion Matrix
 
-Baseline model: Logistic Regression
+Best model selection and saving
 
-Ensemble models: Random Forest, XGBoost, LightGBM
+✅ Task 3 – Model Explainability
+Built-in feature importance analysis
 
-Stratified K-Fold cross-validation (k=5)
+SHAP global summary plots
 
-Metrics: AUC-PR, F1-score, confusion matrix
+SHAP force plots for:
 
-Model Explainability: Use SHAP to interpret predictions and identify key fraud drivers.
+True Positive (correct fraud detection)
 
-Business Recommendations: Provide actionable insights based on SHAP and feature importance.
+False Positive (legitimate flagged as fraud)
 
-Data Description
-1. E-commerce Dataset: Fraud_Data.csv
+False Negative (missed fraud)
 
-user_id, signup_time, purchase_time, purchase_value, device_id, source, browser, sex, age, ip_address, class
+SHAP vs built-in importance comparison
 
-Highly imbalanced dataset.
+Identification of top fraud drivers
 
-2. IP Mapping Dataset: IpAddress_to_Country.csv
+Business recommendations grounded in SHAP insights
 
-lower_bound_ip_address, upper_bound_ip_address, country
+📊 Key Insights
+Fraud signals are driven by non-linear feature interactions
 
-3. Bank Dataset: creditcard.csv
+SHAP reveals important features overlooked by built-in importance
 
-Time, V1–V28, Amount, Class
+Timing, velocity, and behavioral features are strong fraud indicators
 
-Extremely imbalanced dataset.
+💡 Business Recommendations
+Apply enhanced verification for transactions shortly after signup
 
-Project Structure
-fraud-detection/
-│
-├─ data/
-│  ├─ raw/         # Original CSV files (not tracked)
-│  └─ processed/   # Cleaned and feature-engineered datasets
-│
-├─ notebooks/
-│  ├─ __init__.py
-│  ├─ eda-fraud-data.ipynb
-│  ├─ eda-creditcard.ipynb
-│  ├─ feature-engineering.ipynb
-│  ├─ modeling.ipynb
-│  ├─ shap-explainability.ipynb
-│  └─ README.md
-│
-├─ scripts/
-│  ├─ __init__.py
-│  └─ preprocessing.py
-│
-├─ src/
-│  ├─ __init__.py
-│  ├─ task1_data_analysis.py
-│  └─ task2_modeling.py
-│
-├─ tests/
-│  └─ __init__.py
-│
-├─ models/          # Saved model artifacts
-├─ requirements.txt
-├─ .gitignore
-└─ README.md
+Monitor high-risk feature combinations identified by SHAP
+
+Use SHAP-based alerts to flag rare but high-impact fraud patterns
+
+🧪 Testing & CI
+Unit testing enabled via GitHub Actions
+
+Modular, reusable code structure under src/
+
+👤 Author
+Rahel Aklog
+Senior Analytics Officer | Data Science & Machine Learning
+
+📅 Final Submission
+🕗 20:00 UTC – Tuesday, 30 December 2025
